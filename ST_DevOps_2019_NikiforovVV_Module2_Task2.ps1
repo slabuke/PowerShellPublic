@@ -57,6 +57,6 @@ Get-History | Export-Clixml -Path P:\123.xml
 #11.	Загрузить данные из полученного в п.10 xml-файла и вывести в виде списка информацию о каждой записи, в виде 5 любых (выбранных Вами) свойств.
 Import-Clixml -Path P:\123.xml  | ForEach-Object {Write-Host $_.Start, $_.ID, $_.EndExecutionTime, $_.ExecutionStatus, $_.CommandLine} 
 
-#12.	Удалить созданный диск и папку С:\M2T2_ФАМИЛИЯ
+#12.	Удалить созданный диск и папку С:\M2T2_ФАМИЛИЯ 
 Remove-Item -Path P:\
 Remove-PSDrive -Name P
