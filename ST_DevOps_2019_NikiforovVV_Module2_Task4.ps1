@@ -14,8 +14,22 @@ Get-WmiObject -Class win32_operatingSystem | ForEach-Object{ Write-host $_.Syste
 Get-WmiObject -Class Win32_BIOS 
 
 #6.	Вывести свободное место на локальных дисках. На каждом и сумму.
+$SumFreeSpace = 0
+Get-WmiObject -Class Win32_LogicalDisk | ForEach-Object {Write-Host $_.Name ([math]::Round(($_.Freespace / 1Gb),2)); $SumFreeSpace += [math]::Round(($_.Freespace / 1Gb),2)}
+Write-Host 'Total free space:' $SumFreeSpace 'Gb'
+
 #7.	Написать сценарий, выводящий суммарное время пингования компьютера (например 10.0.0.1) в сети.
+$SumPing = 0
+for($i = 1; $i -le 4; $i++)
+{
+$Ping = Get-WmiObject win32_PingStatus -Filter "Address = '192.168.0.1'"
+Write-host 'Ожидание ответа' $Ping.ResponseTime 'ms' ;
+$SumPing += $Ping.ResponseTime
+}
+Write-Host 'Сумма пингов на ХОСТ -' $SumPing 'ms' 
+
 #8.	Создать файл-сценарий вывода списка установленных программных продуктов в виде таблицы с полями Имя и Версия.
 Get-WmiObject -Class Win32_Product | Format-Table Name, Version 
 
 #9.	Выводить сообщение при каждом запуске приложения MS Word.
+register-wmiEvent -query "select * from __instancecreationevent within 5 where targetinstance isa 'Win32_Process' and targetinstance.name='winword.exe'" -sourceIdentifier "ProcessStarted" -Action { Write-Host "RUNNING" }
