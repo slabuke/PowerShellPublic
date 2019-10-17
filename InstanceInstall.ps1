@@ -14,8 +14,8 @@ New-NetFirewallRule -DisplayName “SQL ServerUDP” -Direction Inbound –Proto
          If (Get-NetFirewallRule | Where { $_.Enabled –eq ‘True’ –and $_.DisplayName –eq ‘SQL ServerUDP’ }) {Write-Host 'SQLUDP Rule ACtive' -BackgroundColor Green}
          else {Write-Host 'SQLUDP Rule Inactive' -BackgroundColor Red}
 ########################################_________SQL NEW INSTANCE)_______________###########################
-$Server = @("VM1")
-Invoke-Command -ScriptBlock {
+
+
 D:\setup.exe /SAPWD="QWErty123" /CONFIGURATIONFILE="C:\ConfigurationFile.ini" | Out-Null
 
 
