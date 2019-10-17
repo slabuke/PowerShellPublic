@@ -6,7 +6,7 @@ Set-ItemProperty ‘HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinSt
           If (New-Object System.Net.Sockets.TCPClient -ArgumentList 'VM1',3389) { Write-Host 'RDP connection is open'-BackgroundColor Green }   #Connection test
           If ($? -eq $false) { Write-Host 'RDP connection closed' -BackgroundColor Red }
 
-########################################_________RDP(Rules and connection)_______________###########################
+########################################_________(New Firewall Rule)_______________###########################
 New-NetFirewallRule -DisplayName “SQL Server” -Direction Inbound –Protocol TCP –LocalPort 1433 -Action allow                            #NewFirewallRules
 New-NetFirewallRule -DisplayName “SQL ServerUDP” -Direction Inbound –Protocol UDP –LocalPort 1434 -Action allow                         #NewFirewallRules
          If (Get-NetFirewallRule | Where { $_.Enabled –eq ‘True’ –and $_.DisplayName –eq ‘SQL Server’ }) {Write-Host 'SQLTCP Rule ACtive'-BackgroundColor Green}
